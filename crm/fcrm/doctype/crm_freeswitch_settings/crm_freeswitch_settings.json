@@ -1,0 +1,126 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-06-12 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "enabled",
+  "column_break_rec",
+  "record_calls",
+  "section_break_sip",
+  "server_address",
+  "column_break_wss",
+  "wss_url",
+  "section_break_esl",
+  "esl_host",
+  "esl_port",
+  "column_break_esl",
+  "esl_password"
+ ],
+ "fields": [
+  {
+   "default": "0",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "column_break_rec",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "depends_on": "enabled",
+   "fieldname": "record_calls",
+   "fieldtype": "Check",
+   "label": "Record Calls"
+  },
+  {
+   "depends_on": "enabled",
+   "fieldname": "section_break_sip",
+   "fieldtype": "Section Break",
+   "label": "SIP Settings"
+  },
+  {
+   "depends_on": "enabled",
+   "fieldname": "server_address",
+   "fieldtype": "Data",
+   "label": "SIP Server Address",
+   "mandatory_depends_on": "eval: doc.enabled"
+  },
+  {
+   "fieldname": "column_break_wss",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "enabled",
+   "fieldname": "wss_url",
+   "fieldtype": "Data",
+   "label": "WSS URL",
+   "mandatory_depends_on": "eval: doc.enabled"
+  },
+  {
+   "depends_on": "enabled",
+   "fieldname": "section_break_esl",
+   "fieldtype": "Section Break",
+   "label": "Event Socket (ESL) Settings"
+  },
+  {
+   "depends_on": "enabled",
+   "fieldname": "esl_host",
+   "fieldtype": "Data",
+   "label": "ESL Host"
+  },
+  {
+   "depends_on": "enabled",
+   "fieldname": "esl_port",
+   "fieldtype": "Int",
+   "label": "ESL Port"
+  },
+  {
+   "fieldname": "column_break_esl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "enabled",
+   "fieldname": "esl_password",
+   "fieldtype": "Password",
+   "label": "ESL Password"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-06-12 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "FCRM",
+ "name": "CRM FreeSWITCH Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Sales Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
