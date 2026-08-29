@@ -1,9 +1,9 @@
 [project]
 name = "crm"
 authors = [
-    { name = "Frappe Technologies Pvt. Ltd.", email = "shariq@frappe.io"}
+    { name = "TezCRM", email = "support@tezcrm.com"}
 ]
-description = "Kick-ass Open Source CRM"
+description = "Modern SaaS CRM — $7/user/month. Supercharge your sales operations."
 requires-python = ">=3.10"
 readme = "README.md"
 dynamic = ["version"]
@@ -72,6 +72,5 @@ indent-style = "tab"
 docstring-code-format = true
 
 [project.urls]
-Homepage = "https://frappe.io/crm"
-Repository = "https://github.com/frappe/crm.git"
-"Bug Reports" = "https://github.com/frappe/crm/issues"
+Homepage = "https://tezcrm.com"
+"Bug Reports" = "mailto:support@tezcrm.com"

@@ -1,0 +1,84 @@
+services:
+  # 1. TezCRM Web Application
+  - type: web
+    name: tezcrm-web
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: starter # 1 GB RAM or higher recommended for Frappe
+    region: oregon
+    healthCheckPath: /api/method/frappe.ping
+    envVars:
+      - key: PROCESS_TYPE
+        value: web
+      - key: SITE_NAME
+        value: tezcrm.onrender.com
+      - key: DB_HOST
+        fromService:
+          type: pserv
+          name: tezcrm-db
+          property: host
+      - key: DB_PORT
+        value: "3306"
+      - key: DB_ROOT_PASSWORD
+        generateValue: true
+      - key: ADMIN_PASSWORD
+        generateValue: true
+      - key: REDIS_HOST
+        fromService:
+          type: redis
+          name: tezcrm-redis
+          property: host
+      - key: REDIS_PORT
+        fromService:
+          type: redis
+          name: tezcrm-redis
+          property: port
+
+  # 2. Background Worker
+  - type: worker
+    name: tezcrm-worker
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: starter
+    envVars:
+      - key: PROCESS_TYPE
+        value: worker
+      - key: DB_HOST
+        fromService:
+          type: pserv
+          name: tezcrm-db
+          property: host
+      - key: DB_PORT
+        value: "3306"
+      - key: REDIS_HOST
+        fromService:
+          type: redis
+          name: tezcrm-redis
+          property: host
+      - key: REDIS_PORT
+        fromService:
+          type: redis
+          name: tezcrm-redis
+          property: port
+
+  # 3. MariaDB Private Service
+  - type: pserv
+    name: tezcrm-db
+    env: docker
+    dockerfilePath: docker/MariaDB.Dockerfile
+    disk:
+      name: mariadb-data
+      mountPath: /var/lib/mysql
+      sizeGB: 10
+    envVars:
+      - key: MYSQL_ROOT_PASSWORD
+        fromService:
+          type: web
+          name: tezcrm-web
+          envVarKey: DB_ROOT_PASSWORD
+
+  # 4. Redis Cache & Queue
+  - type: redis
+    name: tezcrm-redis
+    plan: starter
+    ipAllowList: []

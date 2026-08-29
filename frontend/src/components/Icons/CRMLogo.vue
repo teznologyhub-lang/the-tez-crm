@@ -6,13 +6,31 @@
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <path
-      d="M214.286 0H85.7143C38.3756 0 0 38.3756 0 85.7143V214.286C0 261.624 38.3756 300 85.7143 300H214.286C261.624 300 300 261.624 300 214.286V85.7143C300 38.3756 261.624 0 214.286 0Z"
-      fill="#EF0BF5"
-    />
-    <path
-      d="M64.2141 90.301V111.862H214.339V140.214L160.187 193.146V208.993L139.705 208.885V193.146L85.6605 140.214H64.2141V149.269L118.259 202.202V230.23L181.634 230.769V202.202L235.786 149.269V90.301H64.2141Z"
-      fill="white"
-    />
+    <defs>
+      <linearGradient id="tez-bg" x1="0" y1="0" x2="300" y2="300" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#1a1a3e"/>
+        <stop offset="100%" stop-color="#0f2057"/>
+      </linearGradient>
+      <linearGradient id="tez-glow" x1="150" y1="80" x2="150" y2="220" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#6ee7ff"/>
+        <stop offset="100%" stop-color="#ffffff"/>
+      </linearGradient>
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+        <feMerge>
+          <feMergeNode in="coloredBlur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+    <!-- Background rounded square -->
+    <rect width="300" height="300" rx="64" ry="64" fill="url(#tez-bg)"/>
+    <!-- T lettermark -->
+    <g filter="url(#glow)">
+      <!-- Horizontal bar of T -->
+      <rect x="68" y="82" width="164" height="44" rx="12" fill="url(#tez-glow)"/>
+      <!-- Vertical stem of T -->
+      <rect x="121" y="82" width="58" height="136" rx="12" fill="url(#tez-glow)"/>
+    </g>
   </svg>
 </template>
