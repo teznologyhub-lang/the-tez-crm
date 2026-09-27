@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; color: #1a1a2e; background: #fff; }
+  .page { max-width: 800px; margin: 0 auto; padding: 40px; }
+
+  .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; }
+  .company-name { font-size: 24px; font-weight: 700; color: #1a1a2e; }
+  .doc-title { text-align: right; }
+  .doc-title h1 { font-size: 28px; font-weight: 800; color: #5B4FF5; letter-spacing: -0.5px; }
+  .doc-title .doc-number { font-size: 14px; color: #666; margin-top: 4px; }
+
+  .divider { border: none; border-top: 2px solid #5B4FF5; margin: 24px 0; }
+
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+  .meta-block { }
+  .meta-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: #999; margin-bottom: 4px; }
+  .meta-value { font-size: 14px; color: #1a1a2e; font-weight: 500; }
+
+  .status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .status-draft { background: #f0f0f0; color: #666; }
+  .status-sent { background: #EBF4FF; color: #3B82F6; }
+  .status-accepted { background: #ECFDF5; color: #10B981; }
+  .status-rejected { background: #FEF2F2; color: #EF4444; }
+
+  .items-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+  .items-table thead tr { background: #5B4FF5; color: #fff; }
+  .items-table thead th { padding: 12px 16px; text-align: left; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; }
+  .items-table thead th:last-child { text-align: right; }
+  .items-table tbody tr { border-bottom: 1px solid #f0f0f0; }
+  .items-table tbody tr:last-child { border-bottom: none; }
+  .items-table tbody td { padding: 12px 16px; vertical-align: top; }
+  .items-table tbody td:last-child { text-align: right; font-weight: 600; }
+  .items-table tfoot td { padding: 12px 16px; }
+
+  .totals { display: flex; justify-content: flex-end; }
+  .totals-box { width: 280px; border: 1px solid #e8e8e8; border-radius: 8px; overflow: hidden; }
+  .totals-row { display: flex; justify-content: space-between; padding: 10px 16px; }
+  .totals-row:nth-child(even) { background: #f9f9f9; }
+  .totals-row.grand { background: #5B4FF5; color: #fff; font-weight: 700; font-size: 15px; }
+
+  .footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid #e8e8e8; font-size: 12px; color: #999; text-align: center; }
+  .notes { margin-top: 32px; padding: 16px; background: #f9f9f9; border-radius: 8px; border-left: 4px solid #5B4FF5; }
+  .notes-title { font-weight: 600; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <div>
+      <div class="company-name">{{ frappe.db.get_default('company') or 'TezCRM' }}</div>
+    </div>
+    <div class="doc-title">
+      <h1>Quotation</h1>
+      <div class="doc-number">{{ doc.name }}</div>
+      <div style="margin-top: 8px;">
+        <span class="status-badge status-{{ doc.status | lower }}">{{ doc.status }}</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="meta-grid">
+    <div class="meta-block">
+      <div class="meta-label">Customer / Organization</div>
+      <div class="meta-value">{{ doc.customer or '—' }}</div>
+    </div>
+    <div class="meta-block">
+      <div class="meta-label">Date</div>
+      <div class="meta-value">{{ frappe.format(doc.date, 'Date') }}</div>
+    </div>
+    <div class="meta-block">
+      <div class="meta-label">Deal Reference</div>
+      <div class="meta-value">{{ doc.deal or '—' }}</div>
+    </div>
+    <div class="meta-block">
+      <div class="meta-label">Valid Till</div>
+      <div class="meta-value">{{ frappe.format(doc.valid_till, 'Date') if doc.valid_till else '—' }}</div>
+    </div>
+  </div>
+
+  <table class="items-table">
+    <thead>
+      <tr>
+        <th style="width: 40px;">#</th>
+        <th>Product / Description</th>
+        <th style="width: 80px;">Qty</th>
+        <th style="width: 110px;">Unit Price</th>
+        <th style="width: 110px;">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in doc.items %}
+      <tr>
+        <td style="color: #999;">{{ loop.index }}</td>
+        <td>
+          <div style="font-weight: 600;">{{ item.product or item.item_name or '—' }}</div>
+          {% if item.description %}
+          <div style="color: #666; font-size: 12px; margin-top: 2px;">{{ item.description }}</div>
+          {% endif %}
+        </td>
+        <td>{{ item.qty }}</td>
+        <td>{{ frappe.format(item.rate, {'fieldtype': 'Currency'}) }}</td>
+        <td>{{ frappe.format(item.amount, {'fieldtype': 'Currency'}) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="totals">
+    <div class="totals-box">
+      <div class="totals-row grand">
+        <span>Grand Total</span>
+        <span>{{ frappe.format(doc.grand_total, {'fieldtype': 'Currency'}) }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Thank you for your business! This quotation was generated by TezCRM.</p>
+  </div>
+</div>
+</body>
+</html>

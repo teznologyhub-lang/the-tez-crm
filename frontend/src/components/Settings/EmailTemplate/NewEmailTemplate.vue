@@ -77,11 +77,15 @@
           size="md"
           :label="__('Content Type')"
           default="Rich Text"
-          :options="['Rich Text', 'HTML']"
+          :options="[
+            { label: __('Rich Text (Simple Editor)'), value: 'Rich Text' },
+            { label: __('HTML (Advanced)'), value: 'HTML' },
+          ]"
           :placeholder="__('Rich Text')"
         />
       </div>
       <div>
+        <!-- HTML mode -->
         <FormControl
           v-if="template.content_type === 'HTML'"
           ref="content"
@@ -97,6 +101,7 @@
             )
           "
         />
+        <!-- Rich Text mode -->
         <div v-else>
           <div class="mb-1.5 text-base text-ink-gray-5">
             {{ __('Content') }}

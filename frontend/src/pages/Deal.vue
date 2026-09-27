@@ -355,6 +355,7 @@ import LinkIcon from '@/components/Icons/LinkIcon.vue'
 import ArrowUpRightIcon from '@/components/Icons/ArrowUpRightIcon.vue'
 import SuccessIcon from '@/components/Icons/SuccessIcon.vue'
 import AttachmentIcon from '@/components/Icons/AttachmentIcon.vue'
+import CPQIcon from '~icons/lucide/receipt'
 import LayoutHeader from '@/components/LayoutHeader.vue'
 import Activities from '@/components/Activities/Activities.vue'
 import OrganizationModal from '@/components/Modals/OrganizationModal.vue'
@@ -600,6 +601,11 @@ const tabs = computed(() => {
       name: 'Attachments',
       label: __('Attachments'),
       icon: AttachmentIcon,
+    },
+    {
+      name: 'Quotes & Orders',
+      label: __('Quotes & Orders'),
+      icon: CPQIcon,
     },
     {
       name: 'WhatsApp',

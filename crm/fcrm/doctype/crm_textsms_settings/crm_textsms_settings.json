@@ -1,0 +1,91 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-09-06 04:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "enabled",
+  "section_break_credentials",
+  "api_key",
+  "partner_id",
+  "column_break_shortcode",
+  "shortcode"
+ ],
+ "fields": [
+  {
+   "default": "0",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "section_break_credentials",
+   "fieldtype": "Section Break",
+   "hide_border": 1,
+   "label": "TextSMS API Credentials"
+  },
+  {
+   "depends_on": "enabled",
+   "fieldname": "api_key",
+   "fieldtype": "Password",
+   "in_list_view": 1,
+   "label": "API Key",
+   "mandatory_depends_on": "enabled"
+  },
+  {
+   "depends_on": "enabled",
+   "fieldname": "partner_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Partner ID",
+   "mandatory_depends_on": "enabled"
+  },
+  {
+   "fieldname": "column_break_shortcode",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "enabled",
+   "fieldname": "shortcode",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Shortcode / Sender ID",
+   "mandatory_depends_on": "enabled"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-09-06 04:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "FCRM",
+ "name": "CRM TextSMS Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Sales Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

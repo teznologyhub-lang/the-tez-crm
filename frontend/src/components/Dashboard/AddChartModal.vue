@@ -71,9 +71,9 @@ const chartTypes = [
   { label: __('Donut Chart'), value: 'donut_chart' },
 ]
 
-const numberChart = ref('')
 const numberCharts = [
   { label: __('Total Leads'), value: 'total_leads' },
+  { label: __('Lead Conversion Rate'), value: 'lead_conversion_rate' },
   { label: __('Ongoing Deals'), value: 'ongoing_deals' },
   { label: __('Avg Ongoing Deal Value'), value: 'average_ongoing_deal_value' },
   { label: __('Won Deals'), value: 'won_deals' },
@@ -102,6 +102,7 @@ const axisCharts = [
 
 const donutChart = ref('deals_by_stage_donut')
 const donutCharts = [
+  { label: __('Commercial Volume (CPQ)'), value: 'cpq_summary' },
   { label: __('Deals by Stage'), value: 'deals_by_stage_donut' },
   { label: __('Leads by Source'), value: 'leads_by_source' },
   { label: __('Deals by Source'), value: 'deals_by_source' },

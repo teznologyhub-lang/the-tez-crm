@@ -1,0 +1,90 @@
+{
+ "actions": [],
+ "creation": "2026-09-14 23:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "action_type",
+  "email_template",
+  "recipient_field",
+  "custom_recipient",
+  "update_field_name",
+  "update_field_value",
+  "task_subject",
+  "task_due_in_days",
+  "assign_to_user",
+  "webhook_url"
+ ],
+ "fields": [
+  {
+   "fieldname": "action_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Action Type",
+   "options": "send_email\nupdate_field\ncreate_task\nassign_owner\nwebhook",
+   "reqd": 1
+  },
+  {
+   "fieldname": "email_template",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Email Template",
+   "options": "Email Template"
+  },
+  {
+   "fieldname": "recipient_field",
+   "fieldtype": "Select",
+   "label": "Recipient",
+   "options": "Lead/Contact Email\nOwner Email\nCustom Email"
+  },
+  {
+   "fieldname": "custom_recipient",
+   "fieldtype": "Data",
+   "label": "Custom Email Address"
+  },
+  {
+   "fieldname": "update_field_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Update Field Name"
+  },
+  {
+   "fieldname": "update_field_value",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Update Field Value"
+  },
+  {
+   "fieldname": "task_subject",
+   "fieldtype": "Data",
+   "label": "Task Subject"
+  },
+  {
+   "default": "1",
+   "fieldname": "task_due_in_days",
+   "fieldtype": "Int",
+   "label": "Task Due (Days)"
+  },
+  {
+   "fieldname": "assign_to_user",
+   "fieldtype": "Link",
+   "label": "Assign To User",
+   "options": "User"
+  },
+  {
+   "fieldname": "webhook_url",
+   "fieldtype": "Data",
+   "label": "Webhook URL"
+  }
+ ],
+ "istable": 1,
+ "modified": "2026-09-14 23:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "FCRM",
+ "name": "CRM Workflow Action",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

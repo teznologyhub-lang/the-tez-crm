@@ -1,5 +1,5 @@
 <template>
-  <div class="flex overflow-x-auto h-full">
+  <div class="flex overflow-x-auto h-full custom-scrollbar pb-2">
     <Draggable
       v-if="columns"
       :list="columns"
@@ -11,7 +11,7 @@
       <template #item="{ element: column }">
         <div
           v-if="!column.column.delete"
-          class="flex flex-col gap-2.5 min-w-72 w-72 hover:bg-surface-gray-2 rounded-lg p-2.5"
+          class="flex flex-col gap-2.5 min-w-72 w-72 hover:bg-surface-gray-2 rounded-xl p-2.5 transition-colors duration-200"
         >
           <div class="flex gap-2 items-center group justify-between">
             <div class="flex items-center text-base">
@@ -50,7 +50,13 @@
                   </div>
                 </template>
               </Popover>
-              <div class="text-ink-gray-9">{{ column.column.name }}</div>
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-semibold text-ink-gray-9">{{ column.column.name }}</span>
+                <span
+                  v-if="column.column.count"
+                  class="inline-flex items-center justify-center min-w-5 h-5 px-1.5 rounded-full bg-surface-gray-3 text-xs font-medium text-ink-gray-6"
+                >{{ column.column.count }}</span>
+              </div>
             </div>
             <div class="flex">
               <Dropdown :options="actions(column)">
@@ -69,7 +75,7 @@
               />
             </div>
           </div>
-          <div class="overflow-y-auto flex flex-col gap-2 h-full">
+          <div class="overflow-y-auto flex flex-col gap-2 h-full custom-scrollbar pr-1">
             <Draggable
               :list="column.data"
               group="fields"
@@ -82,7 +88,7 @@
               <template #item="{ element: fields }">
                 <component
                   :is="options.getRoute ? 'router-link' : 'div'"
-                  class="pt-3 px-3.5 pb-2.5 rounded-lg border bg-surface-white text-base flex flex-col text-ink-gray-9"
+                  class="pt-3 px-3.5 pb-2.5 rounded-xl border border-surface-gray-3 bg-surface-white text-base flex flex-col text-ink-gray-9 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
                   :data-name="fields.name"
                   v-bind="{
                     to: options.getRoute ? options.getRoute(fields) : undefined,
@@ -104,9 +110,9 @@
                       </div>
                     </div>
                   </slot>
-                  <div class="border-b h-px my-2.5" />
+                  <div class="border-b border-surface-gray-3 h-px my-2" />
 
-                  <div class="flex flex-col gap-3.5">
+                  <div class="flex flex-col gap-2.5">
                     <template v-for="value in column.fields" :key="value">
                       <slot
                         name="fields"
@@ -116,13 +122,13 @@
                           itemName: fields.name,
                         }"
                       >
-                        <div v-if="fields[value]" class="truncate">
+                        <div v-if="fields[value]" class="truncate text-xs text-ink-gray-6">
                           {{ fields[value] }}
                         </div>
                       </slot>
                     </template>
                   </div>
-                  <div class="border-b h-px mt-2.5 mb-2" />
+                  <div class="border-b border-surface-gray-3 h-px mt-2.5 mb-1.5" />
                   <slot name="actions" v-bind="{ itemName: fields.name }">
                     <div class="flex gap-2 items-center justify-between">
                       <div></div>

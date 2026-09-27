@@ -155,29 +155,25 @@ override_doctype_class = {
 # Hook on document methods and events
 
 doc_events = {
-	"Contact": {
-		"validate": ["crm.api.contact.validate"],
-	},
-	"ToDo": {
-		"after_insert": ["crm.api.todo.after_insert"],
-		"on_update": ["crm.api.todo.on_update"],
-	},
-	"Communication": {
-		"after_insert": ["crm.utils.on_communication_insert"],
-		"on_update": ["crm.utils.on_communication_update"],
-	},
-	"Comment": {
-		"after_insert": ["crm.utils.on_comment_insert"],
-		"on_update": ["crm.api.comment.on_update"],
-	},
-	"WhatsApp Message": {
-		"validate": ["crm.api.whatsapp.validate"],
-		"on_update": ["crm.api.whatsapp.on_update"],
+	"CRM Lead": {
+		"after_insert": ["crm.workflow.engine.trigger_workflow_rules"],
+		"on_update": ["crm.workflow.engine.trigger_workflow_rules"],
 	},
 	"CRM Deal": {
+		"after_insert": ["crm.workflow.engine.trigger_workflow_rules"],
 		"on_update": [
-			"crm.fcrm.doctype.erpnext_crm_settings.erpnext_crm_settings.create_customer_in_erpnext"
+			"crm.workflow.engine.trigger_workflow_rules",
+			"crm.fcrm.doctype.erpnext_crm_settings.erpnext_crm_settings.create_customer_in_erpnext",
 		],
+	},
+	"CRM Task": {
+		"after_insert": ["crm.workflow.engine.trigger_workflow_rules"],
+		"on_update": ["crm.workflow.engine.trigger_workflow_rules"],
+	},
+	"Contact": {
+		"after_insert": ["crm.workflow.engine.trigger_workflow_rules"],
+		"on_update": ["crm.workflow.engine.trigger_workflow_rules"],
+		"validate": ["crm.api.contact.validate"],
 	},
 	"Sales Order": {
 		"before_validate": [

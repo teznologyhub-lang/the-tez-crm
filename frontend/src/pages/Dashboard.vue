@@ -41,7 +41,7 @@
       </template>
     </LayoutHeader>
 
-    <div class="p-5 pb-2 flex items-center gap-4">
+    <div class="p-4 flex items-center justify-start gap-3">
       <Dropdown
         v-if="!showDatePicker"
         v-model="preset"
@@ -51,7 +51,7 @@
         :button="{
           label: __(preset),
           class:
-            '!w-full justify-start [&>span]:mr-auto [&>svg]:text-ink-gray-5',
+            '!w-auto min-w-[140px] justify-start text-xs font-medium border-surface-gray-3 bg-surface-white hover:bg-surface-gray-2 shadow-xs [&>span]:mr-auto [&>svg]:text-ink-gray-5',
           variant: 'outline',
           iconRight: 'chevron-down',
           iconLeft: 'calendar',
@@ -60,7 +60,7 @@
       <DateRangePicker
         v-else
         ref="datePickerRef"
-        class="!w-48"
+        class="!w-48 text-xs"
         :value="filters.period"
         variant="outline"
         :placeholder="__('Period')"
@@ -79,12 +79,13 @@
         "
       >
         <template #prefix>
-          <LucideCalendar class="size-4 text-ink-gray-5 mr-2" />
+          <LucideCalendar class="size-3.5 text-ink-gray-5 mr-1.5" />
         </template>
       </DateRangePicker>
+
       <Link
         v-if="isAdmin() || isManager()"
-        class="form-control w-48"
+        class="form-control w-44 text-xs"
         variant="outline"
         :value="filters.user && getUser(filters.user).full_name"
         doctype="User"
@@ -92,24 +93,24 @@
           name: ['in', users.data.crmUsers?.map((u) => u.name)],
           ignore_user_type: 1,
         }"
-        :placeholder="__('Sales User')"
+        :placeholder="__('All Sales Users')"
         :hideMe="true"
         @change="(v) => updateFilter('user', v)"
       >
         <template #prefix>
           <UserAvatar
             v-if="filters.user"
-            class="mr-2"
+            class="mr-1.5"
             :user="filters.user"
-            size="sm"
+            size="xs"
           />
         </template>
         <template #item-prefix="{ option }">
-          <UserAvatar class="mr-2" :user="option.value" size="sm" />
+          <UserAvatar class="mr-1.5" :user="option.value" size="xs" />
         </template>
         <template #item-label="{ option }">
           <Tooltip :text="option.value">
-            <div class="cursor-pointer">
+            <div class="cursor-pointer text-xs">
               {{ getUser(option.value).full_name }}
             </div>
           </Tooltip>

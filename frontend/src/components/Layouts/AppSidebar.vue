@@ -155,6 +155,10 @@
 <script setup>
 import BrushCleaningIcon from '~icons/lucide/brush-cleaning'
 import LucideLayoutDashboard from '~icons/lucide/layout-dashboard'
+import LucideLifeBuoy from '~icons/lucide/life-buoy'
+import ReceiptIcon from '~icons/lucide/receipt'
+import ShoppingCartIcon from '~icons/lucide/shopping-cart'
+import FileTextIcon from '~icons/lucide/file-text'
 import CRMLogo from '@/components/Icons/CRMLogo.vue'
 import InviteIcon from '@/components/Icons/InviteIcon.vue'
 import ConvertIcon from '@/components/Icons/ConvertIcon.vue'
@@ -264,6 +268,26 @@ const links = [
     label: 'Call Logs',
     icon: PhoneIcon,
     to: 'Call Logs',
+  },
+  {
+    label: 'Quotations',
+    icon: FileTextIcon,
+    to: 'Quotations',
+  },
+  {
+    label: 'Sales Orders',
+    icon: ShoppingCartIcon,
+    to: 'Sales Orders',
+  },
+  {
+    label: 'Invoices',
+    icon: ReceiptIcon,
+    to: 'Invoices',
+  },
+  {
+    label: 'Tickets',
+    icon: LucideLifeBuoy,
+    to: 'Tickets',
   },
 ]
 

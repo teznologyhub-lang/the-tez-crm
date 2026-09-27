@@ -21,6 +21,9 @@
     <div v-else-if="title == 'Events'" class="h-full activity">
       <EventArea :doctype="doctype" :docname="docname" />
     </div>
+    <div v-else-if="title == 'Quotes & Orders'" class="h-full overflow-y-auto">
+      <CPQArea :doctype="doctype" :docname="docname" />
+    </div>
     <div
       v-else-if="
         activities?.length ||
@@ -456,6 +459,7 @@ import CommentArea from '@/components/Activities/CommentArea.vue'
 import CallArea from '@/components/Activities/CallArea.vue'
 import NoteArea from '@/components/Activities/NoteArea.vue'
 import TaskArea from '@/components/Activities/TaskArea.vue'
+import CPQArea from '@/components/Activities/CPQArea.vue'
 import AttachmentArea from '@/components/Activities/AttachmentArea.vue'
 import DataFields from '@/components/Activities/DataFields.vue'
 import UserAvatar from '@/components/UserAvatar.vue'
@@ -728,6 +732,8 @@ const emptyText = computed(() => {
     text = 'No Attachments Found'
   } else if (title.value == 'WhatsApp') {
     text = 'No WhatsApp Messages Found'
+  } else if (title.value == 'Quotes & Orders') {
+    text = ''
   }
   return text
 })
@@ -784,7 +790,7 @@ function timelineIcon(activity_type, is_lead) {
   let icon
   switch (activity_type) {
     case 'creation':
-      icon = is_lead ? LeadsIcon : DealsIcon
+      icon = props.doctype === 'CRM Ticket' ? TaskIcon : (is_lead ? LeadsIcon : DealsIcon)
       break
     case 'deal':
       icon = DealsIcon

@@ -19,8 +19,20 @@
         :iconLeft="CommentIcon"
         @click="toggleCommentBox()"
       />
+      <Button
+        variant="ghost"
+        :label="__('SMS')"
+        :iconLeft="MessageSquareIcon"
+        @click="showSMSModal = true"
+      />
     </div>
   </div>
+  <SendSMSModal
+    v-model:show="showSMSModal"
+    :doctype="doctype"
+    :doc="doc"
+    @sent="reload = true"
+  />
   <div
     v-show="showEmailBox"
     @keydown.ctrl.enter.capture.stop="submitEmail"
@@ -85,8 +97,10 @@
 <script setup>
 import EmailEditor from '@/components/EmailEditor.vue'
 import CommentBox from '@/components/CommentBox.vue'
+import SendSMSModal from '@/components/Modals/SendSMSModal.vue'
 import CommentIcon from '@/components/Icons/CommentIcon.vue'
 import Email2Icon from '@/components/Icons/Email2Icon.vue'
+import MessageSquareIcon from '~icons/lucide/message-square'
 import { usersStore } from '@/stores/users'
 import { useStorage } from '@vueuse/core'
 import { useOnboarding, useTelemetry } from 'frappe-ui/frappe'
@@ -108,6 +122,7 @@ const { capture } = useTelemetry()
 
 const showEmailBox = ref(false)
 const showCommentBox = ref(false)
+const showSMSModal = ref(false)
 const newEmail = useStorage(
   `emailBoxContent-${getUser().email}-${props.doctype}-${doc.value.name}`,
   '',

@@ -1,0 +1,120 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:WF-.#####",
+ "creation": "2026-09-17 17:49:11.617367",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "is_active",
+  "lead_source",
+  "default_lead_owner",
+  "success_message",
+  "redirect_url",
+  "allowed_domains",
+  "fields"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Form Title",
+   "reqd": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is Active"
+  },
+  {
+   "fieldname": "lead_source",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Lead Source",
+   "options": "CRM Lead Source"
+  },
+  {
+   "fieldname": "default_lead_owner",
+   "fieldtype": "Link",
+   "label": "Default Lead Owner",
+   "options": "User"
+  },
+  {
+   "default": "Thank you for contacting us! We will get back to you shortly.",
+   "fieldname": "success_message",
+   "fieldtype": "Small Text",
+   "label": "Success Message"
+  },
+  {
+   "fieldname": "redirect_url",
+   "fieldtype": "Data",
+   "label": "Redirect URL"
+  },
+  {
+   "fieldname": "allowed_domains",
+   "fieldtype": "Small Text",
+   "label": "Allowed Domains"
+  },
+  {
+   "fieldname": "fields",
+   "fieldtype": "Table",
+   "label": "Form Fields",
+   "options": "CRM Web Form Field",
+   "reqd": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-09-17 17:49:11.617367",
+ "modified_by": "Administrator",
+ "module": "FCRM",
+ "name": "CRM Web Form",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales User",
+   "share": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

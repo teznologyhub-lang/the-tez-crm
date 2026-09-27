@@ -1,0 +1,125 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-09-14 23:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "rule_name",
+  "document_type",
+  "trigger_type",
+  "trigger_field",
+  "column_break_1",
+  "is_active",
+  "description",
+  "section_conditions",
+  "conditions",
+  "section_actions",
+  "actions"
+ ],
+ "fields": [
+  {
+   "fieldname": "rule_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Rule Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "document_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Target Doctype",
+   "options": "CRM Lead\nCRM Deal\nCRM Task\nContact\nCRM Organization",
+   "reqd": 1
+  },
+  {
+   "fieldname": "trigger_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Trigger Event",
+   "options": "On Creation\nOn Update\nOn Creation or Update\nOn Field Change",
+   "reqd": 1
+  },
+  {
+   "fieldname": "trigger_field",
+   "fieldtype": "Data",
+   "label": "Trigger Field (if On Field Change)"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Active"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "section_conditions",
+   "fieldtype": "Section Break",
+   "label": "Conditions / Filters"
+  },
+  {
+   "fieldname": "conditions",
+   "fieldtype": "Table",
+   "label": "Conditions",
+   "options": "CRM Workflow Condition"
+  },
+  {
+   "fieldname": "section_actions",
+   "fieldtype": "Section Break",
+   "label": "Automated Actions"
+  },
+  {
+   "fieldname": "actions",
+   "fieldtype": "Table",
+   "label": "Actions",
+   "options": "CRM Workflow Action"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-09-14 23:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "FCRM",
+ "name": "CRM Workflow Rule",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

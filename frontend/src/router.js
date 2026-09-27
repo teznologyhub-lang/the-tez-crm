@@ -112,6 +112,36 @@ const routes = [
     component: () => import('@/pages/Welcome.vue'),
   },
   {
+    alias: '/quotations',
+    path: '/quotations/view/:viewType?',
+    name: 'Quotations',
+    component: () => import('@/pages/Quotations.vue'),
+  },
+  {
+    alias: '/sales-orders',
+    path: '/sales-orders/view/:viewType?',
+    name: 'Sales Orders',
+    component: () => import('@/pages/SalesOrders.vue'),
+  },
+  {
+    alias: '/invoices',
+    path: '/invoices/view/:viewType?',
+    name: 'Invoices',
+    component: () => import('@/pages/Invoices.vue'),
+  },
+  {
+    alias: '/tickets',
+    path: '/tickets/view/:viewType?',
+    name: 'Tickets',
+    component: () => import('@/pages/Tickets.vue'),
+  },
+  {
+    path: '/tickets/:ticketId',
+    name: 'Ticket',
+    component: () => import(`@/pages/${handleMobileView('Ticket')}.vue`),
+    props: true,
+  },
+  {
     path: '/:invalidpath',
     name: 'Invalid Page',
     component: () => import('@/pages/InvalidPage.vue'),
@@ -174,8 +204,13 @@ router.beforeEach(async (to, from, next) => {
     window.location.href = '/login?redirect-to=/crm'
   } else if (to.matched.length === 0) {
     next({ name: 'Invalid Page' })
-  } else if (['Deal', 'Lead'].includes(to.name) && !to.hash) {
-    let storageKey = to.name === 'Deal' ? 'lastDealTab' : 'lastLeadTab'
+  } else if (['Deal', 'Lead', 'Ticket'].includes(to.name) && !to.hash) {
+    let storageKey =
+      to.name === 'Deal'
+        ? 'lastDealTab'
+        : to.name === 'Lead'
+          ? 'lastLeadTab'
+          : 'lastTicketTab'
     const activeTab = localStorage.getItem(storageKey) || 'activity'
     const hash = '#' + activeTab
     next({ ...to, hash })
@@ -188,6 +223,10 @@ router.beforeEach(async (to, from, next) => {
       'Notes',
       'Tasks',
       'Call Logs',
+      'Quotations',
+      'Sales Orders',
+      'Invoices',
+      'Tickets',
     ].includes(to.name) &&
     !to.query?.view
   ) {
@@ -206,6 +245,10 @@ router.beforeEach(async (to, from, next) => {
         Notes: 'FCRM Note',
         Tasks: 'CRM Task',
         'Call Logs': 'CRM Call Log',
+        'Quotations': 'CRM Quotation',
+        'Sales Orders': 'CRM Sales Order',
+        'Invoices': 'CRM Invoice',
+        'Tickets': 'CRM Ticket',
       }
 
       const doctype = doctypeMap[to.name]

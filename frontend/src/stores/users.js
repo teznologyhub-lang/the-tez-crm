@@ -35,12 +35,28 @@ export const usersStore = defineStore('crm-users', () => {
     if (!email || email === 'sessionUser') {
       email = session.user
     }
+    if (email === 'Administrator') {
+      if (!usersByName['Administrator']) {
+        usersByName['Administrator'] = {
+          name: 'Administrator',
+          email: 'Administrator',
+          full_name: 'Administrator',
+          first_name: 'Administrator',
+          last_name: '',
+          user_image: null,
+          role: 'System Manager',
+        }
+      } else {
+        usersByName['Administrator'].role = usersByName['Administrator'].role || 'System Manager'
+      }
+      return usersByName['Administrator']
+    }
     if (!usersByName[email]) {
       usersByName[email] = {
         name: email,
         email: email,
-        full_name: email.split('@')[0],
-        first_name: email.split('@')[0],
+        full_name: email ? email.split('@')[0] : '',
+        first_name: email ? email.split('@')[0] : '',
         last_name: '',
         user_image: null,
         role: null,
@@ -50,11 +66,13 @@ export const usersStore = defineStore('crm-users', () => {
   }
 
   function isAdmin(email) {
-    return getUser(email).role === 'System Manager'
+    const user = getUser(email)
+    return user.role === 'System Manager' || user.name === 'Administrator' || session.user === 'Administrator'
   }
 
   function isManager(email) {
-    return getUser(email).role === 'Sales Manager' || isAdmin(email)
+    const user = getUser(email)
+    return user.role === 'Sales Manager' || isAdmin(email)
   }
 
   function isWebsiteUser(email) {

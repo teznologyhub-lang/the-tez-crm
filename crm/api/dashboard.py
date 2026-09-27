@@ -1202,3 +1202,76 @@ def get_deal_status_change_counts(
 
 	result = query.run(as_dict=True)
 	return result or []
+
+
+def get_cpq_summary(from_date: str | None = None, to_date: str | None = None, user: str | None = None):
+	"""
+	Get summary metrics for CPQ (Quotations, Sales Orders, and Invoices).
+	"""
+	if not from_date or not to_date:
+		from_date = frappe.utils.get_first_day(from_date or frappe.utils.nowdate())
+		to_date = frappe.utils.get_last_day(to_date or frappe.utils.nowdate())
+
+	quotations_total = frappe.db.sql("""
+		SELECT COALESCE(SUM(grand_total), 0) FROM `tabCRM Quotation`
+		WHERE date BETWEEN %s AND %s AND docstatus != 2
+	""", (from_date, to_date))[0][0] or 0
+
+	sales_orders_total = frappe.db.sql("""
+		SELECT COALESCE(SUM(grand_total), 0) FROM `tabCRM Sales Order`
+		WHERE date BETWEEN %s AND %s AND docstatus != 2
+	""", (from_date, to_date))[0][0] or 0
+
+	invoices_total = frappe.db.sql("""
+		SELECT COALESCE(SUM(grand_total), 0) FROM `tabCRM Invoice`
+		WHERE date BETWEEN %s AND %s AND docstatus != 2
+	""", (from_date, to_date))[0][0] or 0
+
+	return {
+		"title": _("Commercial Volume (CPQ)"),
+		"subtitle": _("Total value of Quotes, Orders, and Invoices"),
+		"quotations_total": quotations_total,
+		"sales_orders_total": sales_orders_total,
+		"invoices_total": invoices_total,
+		"currency_symbol": get_base_currency_symbol(),
+		"data": [
+			{"category": "Quotations", "value": float(quotations_total)},
+			{"category": "Sales Orders", "value": float(sales_orders_total)},
+			{"category": "Invoices", "value": float(invoices_total)},
+		],
+		"categoryColumn": "category",
+		"valueColumn": "value",
+	}
+
+
+def get_lead_conversion_rate(from_date: str | None = None, to_date: str | None = None, user: str | None = None):
+	"""
+	Get Lead-to-Deal and Deal-to-Won conversion rates.
+	"""
+	if not from_date or not to_date:
+		from_date = frappe.utils.get_first_day(from_date or frappe.utils.nowdate())
+		to_date = frappe.utils.get_last_day(to_date or frappe.utils.nowdate())
+
+	total_leads = frappe.db.count("CRM Lead", filters={"creation": ["between", [from_date, to_date]]})
+	total_deals = frappe.db.count("CRM Deal", filters={"creation": ["between", [from_date, to_date]]})
+	
+	won_status_names = frappe.get_all("CRM Deal Status", filters={"type": "Won"}, pluck="name")
+	won_deals = 0
+	if won_status_names:
+		won_deals = frappe.db.count("CRM Deal", filters={
+			"status": ["in", won_status_names],
+			"creation": ["between", [from_date, to_date]]
+		})
+
+	lead_to_deal_pct = round((total_deals / total_leads * 100), 1) if total_leads else 0.0
+	deal_to_won_pct = round((won_deals / total_deals * 100), 1) if total_deals else 0.0
+
+	return {
+		"title": _("Lead Conversion Rate"),
+		"tooltip": _("Percentage of Leads converted to Deals"),
+		"value": lead_to_deal_pct,
+		"suffix": "%",
+		"delta": deal_to_won_pct,
+		"deltaSuffix": "% Deal Win Rate",
+	}
+

@@ -105,6 +105,7 @@ import { globalStore } from '@/stores/global'
 import { timeAgo, sanitizeHTML } from '@/utils'
 import { onClickOutside } from '@vueuse/core'
 import { useTelemetry } from 'frappe-ui/frappe'
+import { playNotificationSound } from '@/utils/sound'
 import { TabButtons } from 'frappe-ui'
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 
@@ -147,7 +148,10 @@ onBeforeUnmount(() => {
 })
 
 onMounted(() => {
-  $socket.on('crm_notification', () => notifications.reload())
+  $socket.on('crm_notification', () => {
+    notifications.reload()
+    playNotificationSound('notification')
+  })
   $socket.on('event_notification', (data) => handleEventNotification(data))
 })
 

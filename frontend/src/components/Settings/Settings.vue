@@ -46,6 +46,7 @@
 import LucideLayoutDashboard from '~icons/lucide/layout-dashboard'
 import LucideNetwork from '~icons/lucide/network'
 import MonitorCogIcon from '~icons/lucide/monitor-cog'
+import MessageSquareIcon from '~icons/lucide/message-square'
 import SlidersIcon from '@/components/Icons/SlidersIcon.vue'
 import SparkleIcon from '@/components/Icons/SparkleIcon.vue'
 import CalendarIcon from '@/components/Icons/CalendarIcon.vue'
@@ -56,12 +57,14 @@ import Email2Icon from '@/components/Icons/Email2Icon.vue'
 import EmailTemplateIcon from '@/components/Icons/EmailTemplateIcon.vue'
 import SettingsIcon from '@/components/Icons/SettingsIcon.vue'
 import SettingsIcon2 from '@/components/Icons/SettingsIcon2.vue'
+
 import Users from '@/components/Settings/Users.vue'
 import Hierarchy from '@/components/Settings/Hierarchy/Hierarchy.vue'
 import InviteUserPage from '@/components/Settings/InviteUserPage.vue'
 import ProfilePage from '@/components/Settings/Profile/ProfilePage.vue'
 import PreferencesSettings from '@/components/Settings/PreferencesSettings.vue'
 import WhatsAppSettings from '@/components/Settings/WhatsAppSettings.vue'
+import SMSSettings from '@/components/Settings/SMS/SMSSettings.vue'
 import ERPNextSettings from '@/components/Settings/ERPNextSettings.vue'
 import LeadSyncSourcePage from '@/components/Settings/LeadSyncing/LeadSyncSourcePage.vue'
 import DefaultsSettings from '@/components/Settings/DefaultsSettings.vue'
@@ -85,13 +88,19 @@ import { Dialog, Avatar } from 'frappe-ui'
 import { ref, markRaw, computed, watch, h } from 'vue'
 import AssignmentRulePage from './AssignmentRules/AssignmentRulePage.vue'
 import ShieldCheck from '~icons/lucide/shield-check'
+import WorkflowRulesPage from './Workflows/WorkflowRulesPage.vue'
+import LucideWorkflow from '~icons/lucide/workflow'
+import LucideGlobe from '~icons/lucide/globe'
 import SlaConfig from './Sla/SlaConfig.vue'
+import WebToLeadFormsPage from './WebToLead/WebToLeadFormsPage.vue'
 
-const { isManager, getUser } = usersStore()
+const { isManager, getUser, users } = usersStore()
 
 const user = computed(() => getUser() || {})
 
 const tabs = computed(() => {
+  // Track users store data loading for reactivity
+  const _ = users.data
   let _tabs = [
     {
       label: __('User Configuration'),
@@ -188,6 +197,11 @@ const tabs = computed(() => {
       label: __('Automation & Rules'),
       items: [
         {
+          label: __('Workflow Rules'),
+          icon: markRaw(LucideWorkflow),
+          component: markRaw(WorkflowRulesPage),
+        },
+        {
           label: __('Assignment Rules'),
           icon: markRaw(h(SettingsIcon2, { class: 'rotate-90' })),
           component: markRaw(AssignmentRulePage),
@@ -220,6 +234,12 @@ const tabs = computed(() => {
           component: markRaw(TelephonyPage),
         },
         {
+          label: __('SMS'),
+          icon: MessageSquareIcon,
+          component: markRaw(SMSSettings),
+          condition: () => isManager(),
+        },
+        {
           label: __('WhatsApp'),
           icon: WhatsAppIcon,
           component: markRaw(WhatsAppSettings),
@@ -235,6 +255,12 @@ const tabs = computed(() => {
           label: __('Lead Syncing'),
           icon: 'refresh-cw',
           component: markRaw(LeadSyncSourcePage),
+          condition: () => isManager(),
+        },
+        {
+          label: __('Web-to-Lead Forms'),
+          icon: markRaw(LucideGlobe),
+          component: markRaw(WebToLeadFormsPage),
           condition: () => isManager(),
         },
       ],

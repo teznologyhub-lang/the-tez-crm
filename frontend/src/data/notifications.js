@@ -4,6 +4,7 @@ import { dayjs } from 'frappe-ui'
 import isBetween from 'dayjs/plugin/isBetween'
 import { useStorage } from '@vueuse/core'
 import { getUserSettings, useUserSettings } from '@/data/userSettings'
+import { playNotificationSound } from '@/utils/sound'
 import { ref, computed, onUnmounted, onMounted } from 'vue'
 
 dayjs.extend(isBetween)
@@ -95,6 +96,7 @@ export const useEventNotificationAlert = () => {
       notification: data,
       createdAt: dayjs().toISOString(),
     })
+    playNotificationSound('popup')
   }
 
   async function completeEventNotificationAlert(id) {
